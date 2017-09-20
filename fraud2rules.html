@@ -159,7 +159,7 @@
 <p>The documentation of the FraudToRules module.</p>
 <span class="target" id="module-ftrules.fraud2rules"></span><dl class="class">
 <dt id="ftrules.fraud2rules.FraudToRules">
-<em class="property">class </em><code class="descclassname">ftrules.fraud2rules.</code><code class="descname">FraudToRules</code><span class="sig-paren">(</span><em>feature_names=None</em>, <em>precision_min=0.5</em>, <em>recall_min=0.01</em>, <em>n_estimators=1</em>, <em>max_samples=0.8</em>, <em>max_samples_features=1.0</em>, <em>max_depth=3</em>, <em>max_features=1.0</em>, <em>min_samples_split=2</em>, <em>bootstrap=False</em>, <em>bootstrap_features=False</em>, <em>n_jobs=1</em>, <em>random_state=None</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ftrules/fraud2rules.html#FraudToRules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ftrules.fraud2rules.FraudToRules" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">ftrules.fraud2rules.</code><code class="descname">FraudToRules</code><span class="sig-paren">(</span><em>feature_names=None</em>, <em>precision_min=0.5</em>, <em>recall_min=0.01</em>, <em>n_estimators=10</em>, <em>max_samples=0.8</em>, <em>max_samples_features=1.0</em>, <em>bootstrap=False</em>, <em>bootstrap_features=False</em>, <em>max_depth=3</em>, <em>max_features=1.0</em>, <em>min_samples_split=2</em>, <em>n_jobs=1</em>, <em>random_state=None</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ftrules/fraud2rules.html#FraudToRules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ftrules.fraud2rules.FraudToRules" title="Permalink to this definition">¶</a></dt>
 <dd><p>An easy-interpretable classifier optimizing simple logical rules.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -174,16 +174,16 @@ format.</p>
 <blockquote>
 <div><p>minimal precision of a rule to be selected.</p>
 </div></blockquote>
-<p><strong>recall_min: float, optional (default=0.1)</strong></p>
+<p><strong>recall_min: float, optional (default=0.01)</strong></p>
 <blockquote>
 <div><p>minimal recall of a rule to be selected.</p>
 </div></blockquote>
-<p><strong>n_estimators</strong> : int, optional (default=1)</p>
+<p><strong>n_estimators</strong> : int, optional (default=10)</p>
 <blockquote>
 <div><p>The number of base estimators (rules) to use for prediction. More are
 built before selection. All are available in the <a href="#id1"><span class="problematic" id="id2">estimators_</span></a> attribute.</p>
 </div></blockquote>
-<p><strong>max_samples</strong> : int or float, optional (default=1.)</p>
+<p><strong>max_samples</strong> : int or float, optional (default=.8)</p>
 <blockquote>
 <div><p>The number of samples to draw from X to train each decision tree, from
 which rules are generated and selected.</p>
@@ -207,7 +207,7 @@ all samples will be used for all trees (no sampling).</p>
 </dd>
 </dl>
 </div></blockquote>
-<p><strong>bootstrap</strong> : boolean, optional (default=True)</p>
+<p><strong>bootstrap</strong> : boolean, optional (default=False)</p>
 <blockquote>
 <div><p>Whether samples are drawn with replacement.</p>
 </div></blockquote>
@@ -215,7 +215,7 @@ all samples will be used for all trees (no sampling).</p>
 <blockquote>
 <div><p>Whether features are drawn with replacement.</p>
 </div></blockquote>
-<p><strong>max_depth</strong> : integer or None, optional (default=None)</p>
+<p><strong>max_depth</strong> : integer or None, optional (default=3)</p>
 <blockquote>
 <div><p>The maximum depth of the decision trees. If None, then nodes are
 expanded until all leaves are pure or until all leaves contain less
@@ -242,12 +242,14 @@ effectively inspect more than <code class="docutils literal"><span class="pre">m
 <p><strong>min_samples_split</strong> : int, float, optional (default=2)</p>
 <blockquote>
 <div><p>The minimum number of samples required to split an internal node for
-each decision tree.
-- If int, then consider <cite>min_samples_split</cite> as the minimum number.
-- If float, then <cite>min_samples_split</cite> is a percentage and</p>
+each decision tree.</p>
 <blockquote>
-<div><p><cite>ceil(min_samples_split * n_samples)</cite> are the minimum
-number of samples for each split.</p>
+<div><ul class="simple">
+<li>If int, then consider <cite>min_samples_split</cite> as the minimum number.</li>
+<li>If float, then <cite>min_samples_split</cite> is a percentage and
+<cite>ceil(min_samples_split * n_samples)</cite> are the minimum
+number of samples for each split.</li>
+</ul>
 </div></blockquote>
 </div></blockquote>
 <p><strong>n_jobs</strong> : integer, optional (default=1)</p>
@@ -273,12 +275,12 @@ by <cite>np.random</cite>.</p>
 <p class="rubric">Attributes</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="5%" />
-<col width="95%" />
+<col width="6%" />
+<col width="94%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>rules_</strong></td>
-<td>(dict of tuples (rule, precision, recall, nb).) The collection of rules generated by fitted sub-estimators (decision trees) and further selected according to their respective OOB precisions and recalls. All rules fulfilling recall_min and precision_min conditions are saved. A number n_rules of these rules are selected according to their OOB precision. The selected rules are used in the <code class="docutils literal"><span class="pre">predict</span></code> method and  can be obtained with rules_[:n_estimators].</td>
+<td>(dict of tuples (rule, precision, recall, nb).) The collection of rules generated by fitted sub-estimators (decision trees) and further selected according to their respective OOB precisions and recalls. All rules fulfilling recall_min and precision_min conditions are saved. The n_estimators best rules are selected to be used in the <code class="docutils literal"><span class="pre">predict</span></code> method and  can be obtained with rules_[:n_estimators].</td>
 </tr>
 <tr class="row-even"><td><strong>estimators_</strong></td>
 <td>(list of DecisionTreeClassifier) The collection of fitted sub-estimators used to generate candidate rules.</td>
@@ -306,7 +308,7 @@ by <cite>np.random</cite>.</p>
 <code class="descname">decision_function</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ftrules/fraud2rules.html#FraudToRules.decision_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ftrules.fraud2rules.FraudToRules.decision_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Average anomaly score of X of the base classifiers (rules).</p>
 <p>The anomaly score of an input sample is computed as
-the negative weighted sum of the binary rules outputs. The weight is
+the weighted sum of the binary rules outputs, the weight being
 the respective precision of each rule.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -321,7 +323,7 @@ the respective precision of each rule.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>scores</strong> : array, shape (n_samples,)</p>
 <blockquote class="last">
 <div><p>The anomaly score of the input samples.
-The lower, the more abnormal. Negative scores represent outliers,
+The higher, the more abnormal. Positive scores represent outliers,
 null scores represent inliers.</p>
 </div></blockquote>
 </td>
@@ -341,13 +343,12 @@ null scores represent inliers.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : array-like, shape (n_samples, n_features)</p>
 <blockquote>
 <div><p>Training vector, where n_samples is the number of samples and
-n_features is the number of features. XXX sparse matrix?</p>
+n_features is the number of features.</p>
 </div></blockquote>
 <p><strong>y</strong> : array-like, shape (n_samples,)</p>
 <blockquote>
 <div><p>Target vector relative to X. Has to follow the convention 0 for
-normal data, 1 for frauds.
-XXX maybe make such y ourselves from input?</p>
+normal data, 1 for anomalies.</p>
 </div></blockquote>
 <p><strong>sample_weight</strong> : array-like, shape (n_samples,) optional</p>
 <blockquote>
@@ -379,14 +380,14 @@ If not provided, then each sample is given unit weight.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : array-like, shape (n_samples, n_features)</p>
 <blockquote>
 <div><p>The input samples. Internally, it will be converted to
-<code class="docutils literal"><span class="pre">dtype=np.float32</span></code> XXX allow sparse matrix?</p>
+<code class="docutils literal"><span class="pre">dtype=np.float32</span></code></p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>is_inlier</strong> : array, shape (n_samples,)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>is_outlier</strong> : array, shape (n_samples,)</p>
 <blockquote class="last">
-<div><p>For each observations, tells whether or not (+1 or -1) it should
-be considered as an inlier according to the fitted model.</p>
+<div><p>For each observations, tells whether or not (1 or 0) it should
+be considered as an outlier according to the selected rules.</p>
 </div></blockquote>
 </td>
 </tr>

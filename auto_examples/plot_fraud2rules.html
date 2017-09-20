@@ -170,8 +170,9 @@
 rules is done by fitting classification and regression trees to sub-samples.
 A fitted tree defines a set of rules (each tree node defines a rule); rules
 are then tested out of the bag, and the ones with higher precision are selected
-and merged. This produces a integer-valued decision function, reflecting for
-each new samples how many rules have find it abnormal.</p>
+and merged. This produces a real-valued decision function, reflecting for
+each new sample how many rules (each weighted by respective precision) have
+found it abnormal.</p>
 <img alt="../_images/sphx_glr_plot_fraud2rules_001.png" class="align-center" src="../_images/sphx_glr_plot_fraud2rules_001.png" />
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">)</span>
 
@@ -202,7 +203,7 @@ each new samples how many rules have find it abnormal.</p>
 <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Fraud To Rules&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues_r</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">)</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_inliers</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_inliers</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
                 <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
@@ -217,7 +218,7 @@ each new samples how many rules have find it abnormal.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  4.379 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  4.481 seconds)</p>
 <div class="sphx-glr-footer docutils container">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_fraud2rules.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_fraud2rules.py</span></code></a></div>

@@ -189,14 +189,14 @@
 <span class="sd">    precision_min: float, optional (default=0.5)</span>
 <span class="sd">        minimal precision of a rule to be selected.</span>
 
-<span class="sd">    recall_min: float, optional (default=0.1)</span>
+<span class="sd">    recall_min: float, optional (default=0.01)</span>
 <span class="sd">        minimal recall of a rule to be selected.</span>
 
-<span class="sd">    n_estimators : int, optional (default=1)</span>
+<span class="sd">    n_estimators : int, optional (default=10)</span>
 <span class="sd">        The number of base estimators (rules) to use for prediction. More are</span>
 <span class="sd">        built before selection. All are available in the estimators_ attribute.</span>
 
-<span class="sd">    max_samples : int or float, optional (default=1.)</span>
+<span class="sd">    max_samples : int or float, optional (default=.8)</span>
 <span class="sd">        The number of samples to draw from X to train each decision tree, from</span>
 <span class="sd">        which rules are generated and selected.</span>
 <span class="sd">            - If int, then draw `max_samples` samples.</span>
@@ -209,13 +209,13 @@
 <span class="sd">            - If int, then draw `max_features` features.</span>
 <span class="sd">            - If float, then draw `max_features * X.shape[1]` features.</span>
 
-<span class="sd">    bootstrap : boolean, optional (default=True)</span>
+<span class="sd">    bootstrap : boolean, optional (default=False)</span>
 <span class="sd">        Whether samples are drawn with replacement.</span>
 
 <span class="sd">    bootstrap_features : boolean, optional (default=False)</span>
 <span class="sd">        Whether features are drawn with replacement.</span>
 
-<span class="sd">    max_depth : integer or None, optional (default=None)</span>
+<span class="sd">    max_depth : integer or None, optional (default=3)</span>
 <span class="sd">        The maximum depth of the decision trees. If None, then nodes are</span>
 <span class="sd">        expanded until all leaves are pure or until all leaves contain less</span>
 <span class="sd">        than min_samples_split samples.</span>
@@ -240,10 +240,10 @@
 <span class="sd">    min_samples_split : int, float, optional (default=2)</span>
 <span class="sd">        The minimum number of samples required to split an internal node for</span>
 <span class="sd">        each decision tree.</span>
-<span class="sd">        - If int, then consider `min_samples_split` as the minimum number.</span>
-<span class="sd">        - If float, then `min_samples_split` is a percentage and</span>
-<span class="sd">          `ceil(min_samples_split * n_samples)` are the minimum</span>
-<span class="sd">          number of samples for each split.</span>
+<span class="sd">            - If int, then consider `min_samples_split` as the minimum number.</span>
+<span class="sd">            - If float, then `min_samples_split` is a percentage and</span>
+<span class="sd">              `ceil(min_samples_split * n_samples)` are the minimum</span>
+<span class="sd">              number of samples for each split.</span>
 
 <span class="sd">    n_jobs : integer, optional (default=1)</span>
 <span class="sd">        The number of jobs to run in parallel for both `fit` and `predict`.</span>
@@ -265,10 +265,8 @@
 <span class="sd">        trees) and further selected according to their respective OOB</span>
 <span class="sd">        precisions and recalls.</span>
 <span class="sd">        All rules fulfilling recall_min and precision_min conditions are saved.</span>
-<span class="sd">        A number n_rules of these rules are selected according to their OOB</span>
-<span class="sd">        precision.</span>
-<span class="sd">        The selected rules are used in the ``predict`` method and  can be</span>
-<span class="sd">        obtained with rules_[:n_estimators].</span>
+<span class="sd">        The n_estimators best rules are selected to be used in the ``predict``</span>
+<span class="sd">        method and  can be obtained with rules_[:n_estimators].</span>
 
 <span class="sd">    estimators_ : list of DecisionTreeClassifier</span>
 <span class="sd">        The collection of fitted sub-estimators used to generate candidate</span>
@@ -295,14 +293,14 @@
                  <span class="n">feature_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">precision_min</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                  <span class="n">recall_min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
-                 <span class="n">n_estimators</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                  <span class="n">max_samples</span><span class="o">=.</span><span class="mi">8</span><span class="p">,</span>
                  <span class="n">max_samples_features</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                 <span class="n">bootstrap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">bootstrap_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                  <span class="n">max_features</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
                  <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                 <span class="n">bootstrap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">bootstrap_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -312,11 +310,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_estimators</span> <span class="o">=</span> <span class="n">n_estimators</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_samples</span> <span class="o">=</span> <span class="n">max_samples</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_samples_features</span> <span class="o">=</span> <span class="n">max_samples_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap</span> <span class="o">=</span> <span class="n">bootstrap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_features</span> <span class="o">=</span> <span class="n">bootstrap_features</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_depth</span> <span class="o">=</span> <span class="n">max_depth</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_features</span> <span class="o">=</span> <span class="n">max_features</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_samples_split</span> <span class="o">=</span> <span class="n">min_samples_split</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap</span> <span class="o">=</span> <span class="n">bootstrap</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_features</span> <span class="o">=</span> <span class="n">bootstrap_features</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
@@ -328,12 +326,11 @@
 <span class="sd">        ----------</span>
 <span class="sd">        X : array-like, shape (n_samples, n_features)</span>
 <span class="sd">            Training vector, where n_samples is the number of samples and</span>
-<span class="sd">            n_features is the number of features. XXX sparse matrix?</span>
+<span class="sd">            n_features is the number of features.</span>
 
 <span class="sd">        y : array-like, shape (n_samples,)</span>
 <span class="sd">            Target vector relative to X. Has to follow the convention 0 for</span>
-<span class="sd">            normal data, 1 for frauds.</span>
-<span class="sd">            XXX maybe make such y ourselves from input?</span>
+<span class="sd">            normal data, 1 for anomalies.</span>
 
 <span class="sd">        sample_weight : array-like, shape (n_samples,) optional</span>
 <span class="sd">            Array of weights that are assigned to individual samples, typically</span>
@@ -360,9 +357,10 @@
                              <span class="s2">&quot; class: </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]):</span>
-            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Found labels </span><span class="si">%s</span><span class="s2">. This method assumes fraud to be labeled as&quot;</span>
-                 <span class="s2">&quot; 1 and normal data to be labeled as 0. Any label&quot;</span>
-                 <span class="s2">&quot; different from 0 will be considered as fraud.&quot;</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Found labels </span><span class="si">%s</span><span class="s2">. This method assumes target class to be&quot;</span>
+                 <span class="s2">&quot; labeled as 1 and normal data to be labeled as 0. Any label&quot;</span>
+                 <span class="s2">&quot; different from 0 will be considered as being from the&quot;</span>
+                 <span class="s2">&quot; target class.&quot;</span>
                  <span class="o">%</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span>
             <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
@@ -442,12 +440,12 @@
                 <span class="n">sample_weight</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">weights</span> <span class="o">=</span> <span class="n">sample_weight</span> <span class="o">-</span> <span class="n">sample_weight</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
             <span class="n">contamination</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-            <span class="n">y_reg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">contamination</span>  <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">y_reg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">contamination</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
                      <span class="o">-</span> <span class="nb">pow</span><span class="p">((</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
             <span class="n">y_reg</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">y_reg</span><span class="p">))</span>  <span class="c1"># sigmoid</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">y_reg</span> <span class="o">=</span> <span class="n">y</span>  <span class="c1"># same as an other classification bagging</span>
-        
+
         <span class="n">bagging_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_reg</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">estimators_</span> <span class="o">+=</span> <span class="n">bagging_clf</span><span class="o">.</span><span class="n">estimators_</span>
@@ -481,8 +479,8 @@
                                          <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_</span><span class="p">)[</span><span class="n">features</span><span class="p">])</span>
             <span class="n">y_oob</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
             <span class="n">y_oob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">y_oob</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span>
-            <span class="c1"># Add OOB performances to rules:</span>
 
+            <span class="c1"># Add OOB performances to rules:</span>
             <span class="n">rules_from_tree</span> <span class="o">=</span> <span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_rule_perf</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">X_oob</span><span class="p">,</span> <span class="n">y_oob</span><span class="p">))</span>
                                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">rules_from_tree</span><span class="p">)]</span>
             <span class="n">rules_</span> <span class="o">+=</span> <span class="n">rules_from_tree</span>
@@ -513,13 +511,13 @@
 <span class="sd">        ----------</span>
 <span class="sd">        X : array-like, shape (n_samples, n_features)</span>
 <span class="sd">            The input samples. Internally, it will be converted to</span>
-<span class="sd">            ``dtype=np.float32`` XXX allow sparse matrix?</span>
+<span class="sd">            ``dtype=np.float32``</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        is_inlier : array, shape (n_samples,)</span>
-<span class="sd">            For each observations, tells whether or not (+1 or -1) it should</span>
-<span class="sd">            be considered as an inlier according to the fitted model.</span>
+<span class="sd">        is_outlier : array, shape (n_samples,)</span>
+<span class="sd">            For each observations, tells whether or not (1 or 0) it should</span>
+<span class="sd">            be considered as an outlier according to the selected rules.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span></div>
@@ -528,7 +526,7 @@
         <span class="sd">&quot;&quot;&quot;Average anomaly score of X of the base classifiers (rules).</span>
 
 <span class="sd">        The anomaly score of an input sample is computed as</span>
-<span class="sd">        the negative weighted sum of the binary rules outputs. The weight is</span>
+<span class="sd">        the weighted sum of the binary rules outputs, the weight being</span>
 <span class="sd">        the respective precision of each rule.</span>
 
 <span class="sd">        Parameters</span>
@@ -540,7 +538,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        scores : array, shape (n_samples,)</span>
 <span class="sd">            The anomaly score of the input samples.</span>
-<span class="sd">            The lower, the more abnormal. Negative scores represent outliers,</span>
+<span class="sd">            The higher, the more abnormal. Positive scores represent outliers,</span>
 <span class="sd">            null scores represent inliers.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -623,15 +621,6 @@
             <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">y_detected</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="nb">float</span><span class="p">(</span><span class="n">true_pos</span><span class="p">)</span> <span class="o">/</span> <span class="n">pos</span></div>
-
-
-<span class="c1"># if __name__ == &#39;__main__&#39;:</span>
-<span class="c1">#     rnd = np.random.RandomState(0)</span>
-<span class="c1">#     X = 3 * rnd.uniform(size=(50, 5)).astype(np.float32)</span>
-<span class="c1">#     y = np.array([1] * (X.shape[0] - 10) + [0] * 10)</span>
-<span class="c1">#     clf = FraudToRules()</span>
-<span class="c1">#     clf.fit(X, y)</span>
-<span class="c1">#     clf.predict(X)</span>
 </pre></div>
 
            </div>
