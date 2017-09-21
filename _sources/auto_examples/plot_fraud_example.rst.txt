@@ -113,7 +113,7 @@ each new samples how many rules have find it abnormal.
 
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  21.155 seconds)
+**Total running time of the script:** ( 0 minutes  19.846 seconds)
 
 
 
