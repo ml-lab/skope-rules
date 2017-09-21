@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ftrules.fraud2rules &mdash; fraud_to_rules 0.1.0 documentation</title>
+  <title>skrules.skope_rules &mdash; skope_rules 0.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="fraud_to_rules 0.1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="skope_rules 0.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -57,7 +57,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> fraud_to_rules
+            <a href="../../index.html" class="icon icon-home"> skope_rules
           
 
           
@@ -108,7 +108,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">fraud_to_rules</a>
+          <a href="../../index.html">skope_rules</a>
         
       </nav>
 
@@ -140,7 +140,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>ftrules.fraud2rules</li>
+      <li>skrules.skope_rules</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -157,7 +157,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for ftrules.fraud2rules</h1><div class="highlight"><pre>
+  <h1>Source code for skrules.skope_rules</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span>
 <span class="kn">import</span> <span class="nn">numbers</span>
@@ -176,7 +176,7 @@
 <span class="n">INTEGER_TYPES</span> <span class="o">=</span> <span class="p">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="FraudToRules"><a class="viewcode-back" href="../../fraud2rules.html#ftrules.fraud2rules.FraudToRules">[docs]</a><span class="k">class</span> <span class="nc">FraudToRules</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+<div class="viewcode-block" id="SkopeRules"><a class="viewcode-back" href="../../skope_rules.html#skrules.skope_rules.SkopeRules">[docs]</a><span class="k">class</span> <span class="nc">SkopeRules</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; An easy-interpretable classifier optimizing simple logical rules.</span>
 
 <span class="sd">    Parameters</span>
@@ -324,7 +324,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
 
-<div class="viewcode-block" id="FraudToRules.fit"><a class="viewcode-back" href="../../fraud2rules.html#ftrules.fraud2rules.FraudToRules.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SkopeRules.fit"><a class="viewcode-back" href="../../skope_rules.html#skrules.skope_rules.SkopeRules.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fit the model according to the given training data.</span>
 
 <span class="sd">        Parameters</span>
@@ -535,7 +535,7 @@
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="FraudToRules.predict"><a class="viewcode-back" href="../../fraud2rules.html#ftrules.fraud2rules.FraudToRules.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="SkopeRules.predict"><a class="viewcode-back" href="../../skope_rules.html#skrules.skope_rules.SkopeRules.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Predict if a particular sample is an outlier or not.</span>
 
 <span class="sd">        Parameters</span>
@@ -553,7 +553,7 @@
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FraudToRules.decision_function"><a class="viewcode-back" href="../../fraud2rules.html#ftrules.fraud2rules.FraudToRules.decision_function">[docs]</a>    <span class="k">def</span> <span class="nf">decision_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="SkopeRules.decision_function"><a class="viewcode-back" href="../../skope_rules.html#skrules.skope_rules.SkopeRules.decision_function">[docs]</a>    <span class="k">def</span> <span class="nf">decision_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Average anomaly score of X of the base classifiers (rules).</span>
 
 <span class="sd">        The anomaly score of an input sample is computed as</span>

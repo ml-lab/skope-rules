@@ -1,15 +1,15 @@
 
 
-.. _sphx_glr_auto_examples_plot_fraud2rules.py:
+.. _sphx_glr_auto_examples_plot_skope_rules.py:
 
 
 ==========================================
-FraudToRules example
+SkopeRules example
 ==========================================
 
-An example using FraudToRules for imbalanced classification.
+An example using SkopeRules for imbalanced classification.
 
-FraudToRules find logical rules with high precision and fuse them. Finding good
+SkopeRules find logical rules with high precision and fuse them. Finding good
 rules is done by fitting classification and regression trees to sub-samples.
 A fitted tree defines a set of rules (each tree node defines a rule); rules
 are then tested out of the bag, and the ones with higher precision are selected
@@ -21,7 +21,7 @@ found it abnormal.
 
 
 
-.. image:: /auto_examples/images/sphx_glr_plot_fraud2rules_001.png
+.. image:: /auto_examples/images/sphx_glr_plot_skope_rules_001.png
     :align: center
 
 
@@ -34,7 +34,7 @@ found it abnormal.
 
     import numpy as np
     import matplotlib.pyplot as plt
-    from ftrules import FraudToRules
+    from skrules import SkopeRules
 
     rng = np.random.RandomState(42)
 
@@ -50,7 +50,7 @@ found it abnormal.
     y_train = [0] * n_inliers + [1] * n_outliers
 
     # fit the model
-    clf = FraudToRules(random_state=rng, n_estimators=10)
+    clf = SkopeRules(random_state=rng, n_estimators=10)
     clf.fit(X_train, y_train)
 
     # plot the line, the samples, and the nearest vectors to the plane
@@ -58,7 +58,7 @@ found it abnormal.
     Z = clf.decision_function(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
 
-    plt.title("Fraud To Rules")
+    plt.title("Skope Rules")
     plt.contourf(xx, yy, Z, cmap=plt.cm.Blues)
 
     a = plt.scatter(X_inliers[:, 0], X_inliers[:, 1], c='white',
@@ -73,7 +73,7 @@ found it abnormal.
                loc="upper left")
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  2.275 seconds)
+**Total running time of the script:** ( 0 minutes  1.868 seconds)
 
 
 
@@ -82,13 +82,13 @@ found it abnormal.
 
   .. container:: sphx-glr-download
 
-     :download:`Download Python source code: plot_fraud2rules.py <plot_fraud2rules.py>`
+     :download:`Download Python source code: plot_skope_rules.py <plot_skope_rules.py>`
 
 
 
   .. container:: sphx-glr-download
 
-     :download:`Download Jupyter notebook: plot_fraud2rules.ipynb <plot_fraud2rules.ipynb>`
+     :download:`Download Jupyter notebook: plot_skope_rules.ipynb <plot_skope_rules.ipynb>`
 
 .. rst-class:: sphx-glr-signature
 

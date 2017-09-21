@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FraudToRules &mdash; fraud_to_rules 0.1.0 documentation</title>
+  <title>SkopeRules &mdash; skope_rules 0.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="fraud_to_rules 0.1.0 documentation" href="index.html"/> 
+    <link rel="top" title="skope_rules 0.1.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -56,7 +56,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> fraud_to_rules
+            <a href="index.html" class="icon icon-home"> skope_rules
           
 
           
@@ -107,7 +107,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">fraud_to_rules</a>
+          <a href="index.html">skope_rules</a>
         
       </nav>
 
@@ -137,7 +137,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>FraudToRules</li>
+      <li>SkopeRules</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -154,12 +154,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="fraudtorules">
-<h1>FraudToRules<a class="headerlink" href="#fraudtorules" title="Permalink to this headline">¶</a></h1>
-<p>The documentation of the FraudToRules module.</p>
-<span class="target" id="module-ftrules.fraud2rules"></span><dl class="class">
-<dt id="ftrules.fraud2rules.FraudToRules">
-<em class="property">class </em><code class="descclassname">ftrules.fraud2rules.</code><code class="descname">FraudToRules</code><span class="sig-paren">(</span><em>feature_names=None</em>, <em>precision_min=0.5</em>, <em>recall_min=0.01</em>, <em>n_estimators=10</em>, <em>similarity_thres=0.99</em>, <em>max_samples=0.8</em>, <em>max_samples_features=1.0</em>, <em>bootstrap=False</em>, <em>bootstrap_features=False</em>, <em>max_depth=3</em>, <em>max_features=1.0</em>, <em>min_samples_split=2</em>, <em>n_jobs=1</em>, <em>random_state=None</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ftrules/fraud2rules.html#FraudToRules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ftrules.fraud2rules.FraudToRules" title="Permalink to this definition">¶</a></dt>
+  <div class="section" id="skoperules">
+<h1>SkopeRules<a class="headerlink" href="#skoperules" title="Permalink to this headline">¶</a></h1>
+<p>The documentation of the SkopeRules module.</p>
+<span class="target" id="module-skrules.skope_rules"></span><dl class="class">
+<dt id="skrules.skope_rules.SkopeRules">
+<em class="property">class </em><code class="descclassname">skrules.skope_rules.</code><code class="descname">SkopeRules</code><span class="sig-paren">(</span><em>feature_names=None</em>, <em>precision_min=0.5</em>, <em>recall_min=0.01</em>, <em>n_estimators=10</em>, <em>similarity_thres=0.99</em>, <em>max_samples=0.8</em>, <em>max_samples_features=1.0</em>, <em>bootstrap=False</em>, <em>bootstrap_features=False</em>, <em>max_depth=3</em>, <em>max_features=1.0</em>, <em>min_samples_split=2</em>, <em>n_jobs=1</em>, <em>random_state=None</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skrules/skope_rules.html#SkopeRules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skrules.skope_rules.SkopeRules" title="Permalink to this definition">¶</a></dt>
 <dd><p>An easy-interpretable classifier optimizing simple logical rules.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -310,8 +310,8 @@ by <cite>np.random</cite>.</p>
 </table>
 <p class="rubric">Methods</p>
 <dl class="method">
-<dt id="ftrules.fraud2rules.FraudToRules.decision_function">
-<code class="descname">decision_function</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ftrules/fraud2rules.html#FraudToRules.decision_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ftrules.fraud2rules.FraudToRules.decision_function" title="Permalink to this definition">¶</a></dt>
+<dt id="skrules.skope_rules.SkopeRules.decision_function">
+<code class="descname">decision_function</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skrules/skope_rules.html#SkopeRules.decision_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skrules.skope_rules.SkopeRules.decision_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Average anomaly score of X of the base classifiers (rules).</p>
 <p>The anomaly score of an input sample is computed as
 the weighted sum of the binary rules outputs, the weight being
@@ -339,8 +339,8 @@ null scores represent inliers.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="ftrules.fraud2rules.FraudToRules.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>sample_weight=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ftrules/fraud2rules.html#FraudToRules.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ftrules.fraud2rules.FraudToRules.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="skrules.skope_rules.SkopeRules.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>sample_weight=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skrules/skope_rules.html#SkopeRules.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skrules.skope_rules.SkopeRules.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the model according to the given training data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -376,8 +376,8 @@ If not provided, then each sample is given unit weight.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="ftrules.fraud2rules.FraudToRules.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ftrules/fraud2rules.html#FraudToRules.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ftrules.fraud2rules.FraudToRules.predict" title="Permalink to this definition">¶</a></dt>
+<dt id="skrules.skope_rules.SkopeRules.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skrules/skope_rules.html#SkopeRules.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skrules.skope_rules.SkopeRules.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predict if a particular sample is an outlier or not.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
