@@ -31,13 +31,13 @@ Introductory examples.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="An example using SkopeRules for finding good rules in a fraud detection setting.">
+    <div class="sphx-glr-thumbcontainer" tooltip=" SkopeRules finds logical rules with high precision and fuse them. Finding good rules is done b...">
 
 .. only:: html
 
-    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_fraud_example_thumb.png
+    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_credit_default_thumb.png
 
-        :ref:`sphx_glr_auto_examples_plot_fraud_example.py`
+        :ref:`sphx_glr_auto_examples_plot_credit_default.py`
 
 .. raw:: html
 
@@ -47,7 +47,7 @@ Introductory examples.
 .. toctree::
    :hidden:
 
-   /auto_examples/plot_fraud_example
+   /auto_examples/plot_credit_default
 .. raw:: html
 
     <div style='clear:both'></div>

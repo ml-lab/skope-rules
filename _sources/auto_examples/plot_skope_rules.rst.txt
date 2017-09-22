@@ -30,11 +30,11 @@ found it abnormal.
 
 .. code-block:: python
 
-    print(__doc__)
 
     import numpy as np
     import matplotlib.pyplot as plt
     from skrules import SkopeRules
+    print(__doc__)
 
     rng = np.random.RandomState(42)
 
@@ -73,7 +73,7 @@ found it abnormal.
                loc="upper left")
     plt.show()
 
-**Total running time of the script:** ( 0 minutes  1.853 seconds)
+**Total running time of the script:** ( 0 minutes  0.511 seconds)
 
 
 
