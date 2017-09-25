@@ -401,6 +401,64 @@ be considered as an outlier according to the selected rules.</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="skrules.skope_rules.SkopeRules.rules_vote">
+<code class="descname">rules_vote</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skrules/skope_rules.html#SkopeRules.rules_vote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skrules.skope_rules.SkopeRules.rules_vote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Score representing a vote of the base classifiers (rules).</p>
+<p>The score of an input sample is computed as the sum of the binary
+rules outputs: a score of k means than k rules have voted positively.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : array-like, shape (n_samples, n_features)</p>
+<blockquote>
+<div><p>The training input samples.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>scores</strong> : array, shape (n_samples,)</p>
+<blockquote class="last">
+<div><p>The score of the input samples.
+The higher, the more abnormal. Positive scores represent outliers,
+null scores represent inliers.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="skrules.skope_rules.SkopeRules.separate_rules_score">
+<code class="descname">separate_rules_score</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skrules/skope_rules.html#SkopeRules.separate_rules_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#skrules.skope_rules.SkopeRules.separate_rules_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Score representing an ordering between the base classifiers (rules).</p>
+<p>The score of an input sample is computed as the number of the more
+precise rule voting positively.
+If there are n rules, ordered by increasing OOB precision, a score of k
+means than the kth rule has voted positively, but not the (k-1) first
+rules.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : array-like, shape (n_samples, n_features)</p>
+<blockquote>
+<div><p>The training input samples.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>scores</strong> : array, shape (n_samples,)</p>
+<blockquote class="last">
+<div><p>The score of the input samples.
+Positive scores represent outliers, null scores represent inliers.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
