@@ -182,15 +182,15 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 
-<span class="sd">    feature_names: list of str, optional</span>
+<span class="sd">    feature_names : list of str, optional</span>
 <span class="sd">        The names of each feature to be used for returning rules in string</span>
 <span class="sd">        format.</span>
 
-<span class="sd">    precision_min: float, optional (default=0.5)</span>
-<span class="sd">        minimal precision of a rule to be selected.</span>
+<span class="sd">    precision_min : float, optional (default=0.5)</span>
+<span class="sd">        The minimal precision of a rule to be selected.</span>
 
-<span class="sd">    recall_min: float, optional (default=0.01)</span>
-<span class="sd">        minimal recall of a rule to be selected.</span>
+<span class="sd">    recall_min : float, optional (default=0.01)</span>
+<span class="sd">        The minimal recall of a rule to be selected.</span>
 
 <span class="sd">    n_estimators : int, optional (default=10)</span>
 <span class="sd">        The number of base estimators (rules) to use for prediction. More are</span>
@@ -210,7 +210,8 @@
 <span class="sd">        all samples will be used for all trees (no sampling).</span>
 
 <span class="sd">    max_samples_features : int or float, optional (default=1.0)</span>
-<span class="sd">        The number of features to draw from X to train each decision tree.</span>
+<span class="sd">        The number of features to draw from X to train each decision tree, from</span>
+<span class="sd">        which rules are generated and selected.</span>
 <span class="sd">            - If int, then draw `max_features` features.</span>
 <span class="sd">            - If float, then draw `max_features * X.shape[1]` features.</span>
 
@@ -255,9 +256,9 @@
 <span class="sd">        If -1, then the number of jobs is set to the number of cores.</span>
 
 <span class="sd">    random_state : int, RandomState instance or None, optional</span>
-<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
-<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
-<span class="sd">        If None, the random number generator is the RandomState instance used</span>
+<span class="sd">        - If int, random_state is the seed used by the random number generator.</span>
+<span class="sd">        - If RandomState instance, random_state is the random number generator.</span>
+<span class="sd">        - If None, the random number generator is the RandomState instance used</span>
 <span class="sd">        by `np.random`.</span>
 
 <span class="sd">    verbose : int, optional (default=0)</span>
@@ -602,7 +603,7 @@
 
         <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="ow">in</span> <span class="n">selected_rules</span><span class="p">:</span>
-            <span class="n">scores</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># w[0]</span>
+            <span class="n">scores</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">scores</span></div>
 
