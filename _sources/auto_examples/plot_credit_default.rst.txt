@@ -266,7 +266,7 @@ recall_min parameters. Here, setting precision_min to 0.6 force the rules to
 have a limited recall.
 
 
-**Total running time of the script:** ( 1 minutes  52.184 seconds)
+**Total running time of the script:** ( 1 minutes  52.302 seconds)
 
 
 
