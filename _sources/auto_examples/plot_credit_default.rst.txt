@@ -20,7 +20,7 @@ analysis shows that setting.
 
 
 Data import and preparation
-..................
+...........................
 
 There are 3 categorical variables (SEX, EDUCATION and MARRIAGE) and 20
 numerical variables.
@@ -77,9 +77,7 @@ for testing. The target is unbalanced with a 22%/78% ratio.
     data['PAY_AMT_old_std'] = data[old_PAY_AMT].apply(
         lambda x: np.std(x), axis=1)
 
-    data = data.drop(old_PAY_AMT, axis=1)
-    data = data.drop(old_BILL_AMT, axis=1)
-    data = data.drop(old_PAY, axis=1)
+    data.drop(old_PAY_AMT + old_BILL_AMT + old_PAY, axis=1, inplace=True)
 
     # Creating the train/test split
     feature_names = list(data.columns)
@@ -103,8 +101,8 @@ for testing. The target is unbalanced with a 22%/78% ratio.
     List of variables used to train models : [u'LIMIT_BAL', u'SEX', u'EDUCATION', u'MARRIAGE', u'AGE', 'PAY_1', u'PAY_2', u'BILL_AMT1', u'BILL_AMT2', u'PAY_AMT1', u'PAY_AMT2', 'PAY_old_mean', 'BILL_AMT_old_mean', 'BILL_AMT_old_std', 'PAY_AMT_old_mean', 'PAY_AMT_old_std']
 
 
-Benchmark with a Random Forest classifier.
-..................
+Benchmark with a Random Forest classifier
+.........................................
 
 This part shows the training and performance evaluation of a random forest
 model. The objective remains to extract rules which targets credit defaults.
@@ -114,22 +112,20 @@ model. The objective remains to extract rules which targets credit defaults.
 .. code-block:: python
 
 
-    RF = GridSearchCV(
+    rf = GridSearchCV(
         RandomForestClassifier(
             random_state=rng,
             n_estimators=30,
             class_weight='balanced'),
-        param_grid={
-            'max_depth': range(3, 8, 1),
-            'max_features': np.linspace(0.1, 1., 5)
-            },
+        param_grid={'max_depth': range(3, 8, 1),
+                    'max_features': np.linspace(0.1, 1., 5)},
         scoring={'AUC': 'roc_auc'}, cv=5,
         refit='AUC', n_jobs=-1)
 
-    RF.fit(X_train, y_train)
-    scoring_RF = RF.predict_proba(X_test)[:, 1]
+    rf.fit(X_train, y_train)
+    scoring_rf = rf.predict_proba(X_test)[:, 1]
 
-    print("Random Forest selected parameters : " + str(RF.best_params_))
+    print("Random Forest selected parameters : %s" % rf.best_params_)
 
     # Plot ROC and PR curves
 
@@ -137,7 +133,7 @@ model. The objective remains to extract rules which targets credit defaults.
                              sharex=True, sharey=True)
 
     ax = axes[0]
-    fpr_RF, tpr_RF, _ = roc_curve(y_test, scoring_RF)
+    fpr_RF, tpr_RF, _ = roc_curve(y_test, scoring_rf)
     ax.step(fpr_RF, tpr_RF, linestyle='-.', c='g', lw=1, where='post')
     ax.set_title("ROC", fontsize=20)
     ax.legend(loc='upper center', fontsize=8)
@@ -145,7 +141,7 @@ model. The objective remains to extract rules which targets credit defaults.
     ax.set_ylabel('True Positive Rate (Recall)', fontsize=18)
 
     ax = axes[1]
-    precision_RF, recall_RF, _ = precision_recall_curve(y_test, scoring_RF)
+    precision_RF, recall_RF, _ = precision_recall_curve(y_test, scoring_rf)
     ax.step(recall_RF, precision_RF, linestyle='-.', c='g', lw=1, where='post')
     ax.set_title("Precision-Recall", fontsize=20)
     ax.set_xlabel('Recall (True Positive Rate)', fontsize=18)
@@ -180,7 +176,7 @@ area of detection (low recall).
 
 
 Getting rules with skrules
-..................
+..........................
 
 This part shows how SkopeRules can be fitted to detect credit defaults.
 Performances are compared with the random forest model previously trained.
@@ -195,8 +191,7 @@ Performances are compared with the random forest model previously trained.
     clf = SkopeRules(
         similarity_thres=.9, max_depth=3, max_features=0.5,
         max_samples_features=0.5, random_state=rng, n_estimators=30,
-        feature_names=feature_names, recall_min=0.02, precision_min=0.6
-        )
+        feature_names=feature_names, recall_min=0.02, precision_min=0.6)
     clf.fit(X_train, y_train)
 
     # in the separate_rules_score method, a score of k means that rule number k
@@ -218,7 +213,7 @@ Performances are compared with the random forest model previously trained.
 
     ax = axes[0]
     fpr, tpr, _ = roc_curve(y_test, scoring)
-    fpr_RF, tpr_RF, _ = roc_curve(y_test, scoring_RF)
+    fpr_rf, tpr_rf, _ = roc_curve(y_test, scoring_rf)
     ax.scatter(fpr[:-1], tpr[:-1], c='b', s=10)
     ax.step(fpr_RF, tpr_RF, linestyle='-.', c='g', lw=1, where='post')
     ax.set_title("ROC", fontsize=20)
@@ -228,7 +223,7 @@ Performances are compared with the random forest model previously trained.
 
     ax = axes[1]
     precision, recall, _ = precision_recall_curve(y_test, scoring)
-    precision_RF, recall_RF, _ = precision_recall_curve(y_test, scoring_RF)
+    precision_rf, recall_rf, _ = precision_recall_curve(y_test, scoring_rf)
     ax.scatter(recall[1:-1], precision[1:-1], c='b', s=10)
     ax.step(recall_RF, precision_RF, linestyle='-.', c='g', lw=1, where='post')
     ax.set_title("Precision-Recall", fontsize=20)
@@ -253,7 +248,7 @@ Performances are compared with the random forest model previously trained.
 
 
 The ROC and Precision-Recall curves show the performance of the rules
-generated by SkopeRulesthe (the blue points) and the performance of the
+generated by SkopeRules the (the blue points) and the performance of the
 Random Forest classifier fitted above.
 Each blue point represents the performance of a set of rules: The kth point
 represents the score associated to the concatenation (union) of the k first
@@ -266,11 +261,13 @@ recall_min parameters. Here, setting precision_min to 0.6 force the rules to
 have a limited recall.
 
 
-**Total running time of the script:** ( 1 minutes  53.960 seconds)
+**Total running time of the script:** ( 1 minutes  54.288 seconds)
 
 
 
-.. container:: sphx-glr-footer
+.. only :: html
+
+ .. container:: sphx-glr-footer
 
 
   .. container:: sphx-glr-download
@@ -283,6 +280,9 @@ have a limited recall.
 
      :download:`Download Jupyter notebook: plot_credit_default.ipynb <plot_credit_default.ipynb>`
 
-.. rst-class:: sphx-glr-signature
 
-    `Generated by Sphinx-Gallery <https://sphinx-gallery.readthedocs.io>`_
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.readthedocs.io>`_

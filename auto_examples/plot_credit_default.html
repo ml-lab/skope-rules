@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_skope_rules.html">SkopeRules example</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Example: detecting defaults on retail credits</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data-import-and-preparation">Data import and preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#benchmark-with-a-random-forest-classifier">Benchmark with a Random Forest classifier.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#benchmark-with-a-random-forest-classifier">Benchmark with a Random Forest classifier</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getting-rules-with-skrules">Getting rules with skrules</a></li>
 </ul>
 </li>
@@ -227,9 +227,7 @@ for testing. The target is unbalanced with a 22%/78% ratio.</p>
 <span class="n">data</span><span class="p">[</span><span class="s1">&#39;PAY_AMT_old_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">old_PAY_AMT</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
     <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">old_PAY_AMT</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">old_BILL_AMT</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">old_PAY</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">old_PAY_AMT</span> <span class="o">+</span> <span class="n">old_BILL_AMT</span> <span class="o">+</span> <span class="n">old_PAY</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="c1"># Creating the train/test split</span>
 <span class="n">feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -249,25 +247,23 @@ for testing. The target is unbalanced with a 22%/78% ratio.</p>
 </div>
 </div>
 <div class="section" id="benchmark-with-a-random-forest-classifier">
-<h2>Benchmark with a Random Forest classifier.<a class="headerlink" href="#benchmark-with-a-random-forest-classifier" title="Permalink to this headline">¶</a></h2>
+<h2>Benchmark with a Random Forest classifier<a class="headerlink" href="#benchmark-with-a-random-forest-classifier" title="Permalink to this headline">¶</a></h2>
 <p>This part shows the training and performance evaluation of a random forest
 model. The objective remains to extract rules which targets credit defaults.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">RF</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">rf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
     <span class="n">RandomForestClassifier</span><span class="p">(</span>
         <span class="n">random_state</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
         <span class="n">n_estimators</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
         <span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">),</span>
-    <span class="n">param_grid</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="p">},</span>
+    <span class="n">param_grid</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">5</span><span class="p">)},</span>
     <span class="n">scoring</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;AUC&#39;</span><span class="p">:</span> <span class="s1">&#39;roc_auc&#39;</span><span class="p">},</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="n">refit</span><span class="o">=</span><span class="s1">&#39;AUC&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="n">RF</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">scoring_RF</span> <span class="o">=</span> <span class="n">RF</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">scoring_rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Random Forest selected parameters : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">RF</span><span class="o">.</span><span class="n">best_params_</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Random Forest selected parameters : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">rf</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
 
 <span class="c1"># Plot ROC and PR curves</span>
 
@@ -275,7 +271,7 @@ model. The objective remains to extract rules which targets credit defaults.</p>
                          <span class="n">sharex</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">fpr_RF</span><span class="p">,</span> <span class="n">tpr_RF</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring_RF</span><span class="p">)</span>
+<span class="n">fpr_RF</span><span class="p">,</span> <span class="n">tpr_RF</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring_rf</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">fpr_RF</span><span class="p">,</span> <span class="n">tpr_RF</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;ROC&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
@@ -283,7 +279,7 @@ model. The objective remains to extract rules which targets credit defaults.</p>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;True Positive Rate (Recall)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">precision_RF</span><span class="p">,</span> <span class="n">recall_RF</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">precision_recall_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring_RF</span><span class="p">)</span>
+<span class="n">precision_RF</span><span class="p">,</span> <span class="n">recall_RF</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">precision_recall_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring_rf</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">recall_RF</span><span class="p">,</span> <span class="n">precision_RF</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Precision-Recall&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Recall (True Positive Rate)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
@@ -317,8 +313,7 @@ Performances are compared with the random forest model previously trained.</p>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">SkopeRules</span><span class="p">(</span>
     <span class="n">similarity_thres</span><span class="o">=.</span><span class="mi">9</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
     <span class="n">max_samples_features</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">recall_min</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">precision_min</span><span class="o">=</span><span class="mf">0.6</span>
-    <span class="p">)</span>
+    <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">recall_min</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">precision_min</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
 <span class="c1"># in the separate_rules_score method, a score of k means that rule number k</span>
@@ -340,7 +335,7 @@ Performances are compared with the random forest model previously trained.</p>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring</span><span class="p">)</span>
-<span class="n">fpr_RF</span><span class="p">,</span> <span class="n">tpr_RF</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring_RF</span><span class="p">)</span>
+<span class="n">fpr_rf</span><span class="p">,</span> <span class="n">tpr_rf</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring_rf</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">fpr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">tpr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">fpr_RF</span><span class="p">,</span> <span class="n">tpr_RF</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;ROC&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -350,7 +345,7 @@ Performances are compared with the random forest model previously trained.</p>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">precision_recall_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring</span><span class="p">)</span>
-<span class="n">precision_RF</span><span class="p">,</span> <span class="n">recall_RF</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">precision_recall_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring_RF</span><span class="p">)</span>
+<span class="n">precision_rf</span><span class="p">,</span> <span class="n">recall_rf</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">precision_recall_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">scoring_rf</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">recall</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">precision</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">recall_RF</span><span class="p">,</span> <span class="n">precision_RF</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Precision-Recall&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -367,7 +362,7 @@ Performances are compared with the random forest model previously trained.</p>
 </pre></div>
 </div>
 <p>The ROC and Precision-Recall curves show the performance of the rules
-generated by SkopeRulesthe (the blue points) and the performance of the
+generated by SkopeRules the (the blue points) and the performance of the
 Random Forest classifier fitted above.
 Each blue point represents the performance of a set of rules: The kth point
 represents the score associated to the concatenation (union) of the k first
@@ -378,14 +373,14 @@ with Random Forest, while offering complete interpretation.
 The range of recall and precision can be controlled by the precision_min and
 recall_min parameters. Here, setting precision_min to 0.6 force the rules to
 have a limited recall.</p>
-<p><strong>Total running time of the script:</strong> ( 1 minutes  53.960 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 1 minutes  54.288 seconds)</p>
 <div class="sphx-glr-footer docutils container">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_credit_default.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_credit_default.py</span></code></a></div>
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../_downloads/plot_credit_default.ipynb" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_credit_default.ipynb</span></code></a></div>
 </div>
-<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Generated by Sphinx-Gallery</a></p>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
 </div>
 
